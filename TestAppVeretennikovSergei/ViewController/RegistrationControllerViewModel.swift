@@ -9,41 +9,27 @@ import Foundation
 import RxSwift
 import RxRelay
 
-protocol RegistrationControllerViewModelProtocol {
-    var disposeBag: DisposeBag { get }
-    
-    var userName: BehaviorRelay<String> { get set }
-    var userAge: BehaviorRelay<Int> { get set }
-    var clearUserData: PublishRelay<Void> { get }
-    
-    var userChilds: [Child] { get set }
-    var isButtonHidden: BehaviorRelay<Bool> { get set }
+protocol ChildsManipulationProtocol {
+    var isButtonHidden: BehaviorRelay<Bool> { get }
+    var userChilds: [Child] { get }
     
     func addChild()
     func getChildModelAt(indexPath: IndexPath) -> ChildCellViewModelProtocol
     
-    func setUserCellBindigsWith(cell: CellForNameSection, at indexPath: IndexPath)
     func setChildCellBindingsWith(cell: ChildTableViewCell, at indexPath: IndexPath)
+    func removeChilds()
     
     func deleteChildAt(indexPath: IndexPath)
-    func deleteUserChilds()
 }
 
-final class RegistrationControllerViewModel: RegistrationControllerViewModelProtocol {
+final class ChildsManipulationClass: ChildsManipulationProtocol {
     
-    let disposeBag = DisposeBag()
-    var userName = BehaviorRelay<String>(value: "")
-    var userAge = BehaviorRelay<Int>(value: 0)
-    var clearUserData = PublishRelay<Void>()
-    var isButtonHidden = BehaviorRelay<Bool>(value: false)
+    let isButtonHidden: BehaviorRelay<Bool>
+    var userChilds: [Child]
     
-    var userChilds: [Child] = []
-    
-    func addChild() {
-        if userChilds.count < 5 {
-            userChilds.append(Child(name: "", age: 0))
-        }
-        userChilds.count == 5 ? isButtonHidden.accept(true) : isButtonHidden.accept(false)
+    init(userChilds: [Child], isButtonHidden: BehaviorRelay<Bool> = BehaviorRelay<Bool>(value: false)) {
+        self.isButtonHidden = isButtonHidden
+        self.userChilds = userChilds
     }
     
     private func childNameChangedAt(indexPath: IndexPath, on newName: String) {
@@ -56,17 +42,19 @@ final class RegistrationControllerViewModel: RegistrationControllerViewModelProt
         userChilds[indexPath.row].age = newAge
     }
     
+    func addChild() {
+        if userChilds.count < 5 {
+            userChilds.append(Child(name: "", age: 0))
+        }
+        userChilds.count == 5 ? isButtonHidden.accept(true) : isButtonHidden.accept(false)
+    }
+    
     func getChildModelAt(indexPath: IndexPath) -> ChildCellViewModelProtocol {
         ChildCellViewModel(child: userChilds[indexPath.row])
     }
     
-    func setUserCellBindigsWith(cell: CellForNameSection, at indexPath: IndexPath) {
-        cell.nameSender.bind(to: userName).disposed(by: cell.disposeBag)
-        cell.ageSender.bind(to: userAge).disposed(by: cell.disposeBag)
-        
-        clearUserData.bind { _ in
-            cell.clearDataSender.accept(())
-        }.disposed(by: cell.disposeBag)
+    func removeChilds() {
+        userChilds.removeAll()
     }
     
     func setChildCellBindingsWith(cell: ChildTableViewCell, at indexPath: IndexPath) {
@@ -88,9 +76,44 @@ final class RegistrationControllerViewModel: RegistrationControllerViewModelProt
         userChilds.remove(at: indexPath.row)
         isButtonHidden.accept(false)
     }
+}
+
+protocol RegistrationControllerViewModelProtocol {
+    var disposeBag: DisposeBag { get }
+    var childManipulationClass: ChildsManipulationProtocol { get }
+    
+    var userName: BehaviorRelay<String> { get set }
+    var userAge: BehaviorRelay<Int> { get set }
+    var clearUserData: PublishRelay<Void> { get }
+    
+    func setUserCellBindigsWith(cell: CellForNameSection, at indexPath: IndexPath)
+    func deleteUserChilds()
+}
+
+final class RegistrationControllerViewModel: RegistrationControllerViewModelProtocol {
+    
+    let childManipulationClass: ChildsManipulationProtocol
+    let disposeBag = DisposeBag()
+    var userName = BehaviorRelay<String>(value: "")
+    var userAge = BehaviorRelay<Int>(value: 0)
+    var clearUserData = PublishRelay<Void>()
+    var isButtonHidden = BehaviorRelay<Bool>(value: false)
     
     func deleteUserChilds() {
-        userChilds.removeAll()
+        childManipulationClass.removeChilds()
         isButtonHidden.accept(false)
+    }
+    
+    func setUserCellBindigsWith(cell: CellForNameSection, at indexPath: IndexPath) {
+        cell.nameSender.bind(to: userName).disposed(by: cell.disposeBag)
+        cell.ageSender.bind(to: userAge).disposed(by: cell.disposeBag)
+        
+        clearUserData.bind { _ in
+            cell.clearDataSender.accept(())
+        }.disposed(by: cell.disposeBag)
+    }
+    
+    init(childManipulationClass: ChildsManipulationProtocol = ChildsManipulationClass(userChilds: [])) {
+        self.childManipulationClass = childManipulationClass
     }
 }

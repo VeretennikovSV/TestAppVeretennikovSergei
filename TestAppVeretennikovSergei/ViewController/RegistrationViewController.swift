@@ -92,12 +92,12 @@ final class RegistrationViewController: UIViewController {
     
     private func setChildCellsBindingWith(cell: ChildTableViewCell, indexPath: IndexPath) {
         
-        viewModel.setChildCellBindingsWith(cell: cell, at: indexPath)
+        viewModel.childManipulationClass.setChildCellBindingsWith(cell: cell, at: indexPath)
         
         cell.deleteChildButtonSender
             .withUnretained(self)
             .bind { vc, _ in
-                vc.viewModel.deleteChildAt(indexPath: indexPath)
+                vc.viewModel.childManipulationClass.deleteChildAt(indexPath: indexPath)
                 vc.tableView.reloadData()
             }
             .disposed(by: cell.viewModel?.disposeBag ?? DisposeBag())
@@ -156,7 +156,7 @@ extension RegistrationViewController: UITableViewDelegate, UITableViewDataSource
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0: return 1
-        case 1: return viewModel.userChilds.count
+        case 1: return viewModel.childManipulationClass.userChilds.count
         default: return 1
         }
     }
@@ -168,10 +168,10 @@ extension RegistrationViewController: UITableViewDelegate, UITableViewDataSource
         case 1: 
             let header = CustomHeader(frame: .zero, headerText: "Дети (макс. 5)", isSecondSection: true)
             
-            viewModel.isButtonHidden.bind(to: header.isButtonHidden).disposed(by: header.disposeBag)
+            viewModel.childManipulationClass.isButtonHidden.bind(to: header.isButtonHidden).disposed(by: header.disposeBag)
             
             header.buttonTapped.bind { [weak self] _ in
-                self?.viewModel.addChild()
+                self?.viewModel.childManipulationClass.addChild()
                 tableView.reloadData()
             }.disposed(by: header.disposeBag)
             
