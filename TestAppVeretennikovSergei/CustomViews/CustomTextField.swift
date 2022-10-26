@@ -48,7 +48,7 @@ final class CustomTextField: UIView {
             toolBar.barStyle = UIBarStyle.default
             
             let space = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-            let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(doneTapped))
+            let doneButton = UIBarButtonItem(title: "Готово", image: nil, target: self, action: #selector(doneTapped))
             
             toolBar.items = [space, doneButton] 
             toolBar.sizeToFit()
@@ -90,6 +90,8 @@ final class CustomTextField: UIView {
         
         textField.delegate = self
         textField.borderStyle = .none
+        textField.returnKeyType = .next
+        
         placeholderLabel.textColor = .lightGray
         
         NSLayoutConstraint.activate([

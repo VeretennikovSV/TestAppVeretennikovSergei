@@ -40,27 +40,6 @@ final class RegistrationViewController: UIViewController {
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification , object: nil)
     }
 
-    @objc func keyboardWillAppear(notification: NSNotification?) {
-
-        guard let keyboardFrame = notification?.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else {
-            return
-        }
-
-        let keyboardHeight: CGFloat
-        if #available(iOS 11.0, *) {
-            keyboardHeight = keyboardFrame.cgRectValue.height - self.view.safeAreaInsets.bottom
-        } else {
-            keyboardHeight = keyboardFrame.cgRectValue.height
-        }
-
-        tableViewBottomLayoutConstraint.constant = -keyboardHeight
-        
-    }
-
-    @objc func keyboardWillDisappear(notification: NSNotification?) {
-        tableViewBottomLayoutConstraint.constant = 0.0
-    }
-    
     private func setConstraints() {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(tableView)
@@ -117,6 +96,28 @@ final class RegistrationViewController: UIViewController {
     private func endEditing() {
         view.endEditing(true)
     }
+    
+    @objc func keyboardWillAppear(notification: NSNotification?) {
+
+        guard let keyboardFrame = notification?.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else {
+            return
+        }
+
+        let keyboardHeight: CGFloat
+        if #available(iOS 11.0, *) {
+            keyboardHeight = keyboardFrame.cgRectValue.height - self.view.safeAreaInsets.bottom
+        } else {
+            keyboardHeight = keyboardFrame.cgRectValue.height
+        }
+
+        tableViewBottomLayoutConstraint.constant = -keyboardHeight
+        
+    }
+
+    @objc func keyboardWillDisappear(notification: NSNotification?) {
+        tableViewBottomLayoutConstraint.constant = 0.0
+    }
+    
 }
 
 extension RegistrationViewController: UITableViewDelegate, UITableViewDataSource {
