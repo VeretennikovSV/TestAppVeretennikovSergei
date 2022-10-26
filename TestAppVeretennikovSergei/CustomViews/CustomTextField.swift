@@ -43,19 +43,7 @@ final class CustomTextField: UIView {
         self.nextField = nextResponder
         self.isAgeTextField = isAgeTextField
         
-        if isAgeTextField { 
-            let toolBar = UIToolbar()
-            toolBar.barStyle = UIBarStyle.default
-            
-            let space = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-            let doneButton = UIBarButtonItem(title: "Готово", image: nil, target: self, action: #selector(doneTapped))
-            
-            toolBar.items = [space, doneButton] 
-            toolBar.sizeToFit()
-            
-            textField.inputAccessoryView = toolBar
-            textField.keyboardType = .decimalPad 
-        }
+        if isAgeTextField { setDecimalKeyboard() }
         
         placeholderLabel.text = placeholder
         layer.cornerRadius = 6
@@ -69,6 +57,20 @@ final class CustomTextField: UIView {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func setDecimalKeyboard() {
+        let toolBar = UIToolbar()
+        toolBar.barStyle = UIBarStyle.default
+        
+        let space = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        let doneButton = UIBarButtonItem(title: "Готово", image: nil, target: self, action: #selector(doneTapped))
+        
+        toolBar.items = [space, doneButton] 
+        toolBar.sizeToFit()
+        
+        textField.inputAccessoryView = toolBar
+        textField.keyboardType = .decimalPad 
     }
     
     private func setBindings() {
