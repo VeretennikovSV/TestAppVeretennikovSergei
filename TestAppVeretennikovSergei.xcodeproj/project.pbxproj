@@ -10,6 +10,7 @@
 		09F0DD7729093EBD0016E346 /* CellProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F0DD7629093EBD0016E346 /* CellProtocol.swift */; };
 		09F0DD7A2909A3DF0016E346 /* ChildManipulationProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F0DD792909A3DF0016E346 /* ChildManipulationProtocol.swift */; };
 		09F0DD7C2909A4550016E346 /* UserProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F0DD7B2909A4550016E346 /* UserProtocol.swift */; };
+		09F0DD7E2909A52A0016E346 /* BaseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F0DD7D2909A52A0016E346 /* BaseViewModel.swift */; };
 		09F9EA8B2907E7D7001193FC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F9EA8A2907E7D7001193FC /* AppDelegate.swift */; };
 		09F9EA8D2907E7D7001193FC /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F9EA8C2907E7D7001193FC /* SceneDelegate.swift */; };
 		09F9EA8F2907E7D7001193FC /* RegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F9EA8E2907E7D7001193FC /* RegistrationViewController.swift */; };
@@ -32,6 +33,7 @@
 		09F0DD7629093EBD0016E346 /* CellProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellProtocol.swift; sourceTree = "<group>"; };
 		09F0DD792909A3DF0016E346 /* ChildManipulationProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChildManipulationProtocol.swift; sourceTree = "<group>"; };
 		09F0DD7B2909A4550016E346 /* UserProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProtocol.swift; sourceTree = "<group>"; };
+		09F0DD7D2909A52A0016E346 /* BaseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewModel.swift; sourceTree = "<group>"; };
 		09F9EA872907E7D7001193FC /* TestAppVeretennikovSergei.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestAppVeretennikovSergei.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		09F9EA8A2907E7D7001193FC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		09F9EA8C2907E7D7001193FC /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -69,6 +71,7 @@
 				09F0DD7629093EBD0016E346 /* CellProtocol.swift */,
 				09F0DD792909A3DF0016E346 /* ChildManipulationProtocol.swift */,
 				09F0DD7B2909A4550016E346 /* UserProtocol.swift */,
+				09F0DD7D2909A52A0016E346 /* BaseViewModel.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -240,6 +243,7 @@
 				09F0DD7729093EBD0016E346 /* CellProtocol.swift in Sources */,
 				09F9EAAA29080244001193FC /* CustomHeader.swift in Sources */,
 				09F9EAB029081543001193FC /* ChildTableViewCell.swift in Sources */,
+				09F0DD7E2909A52A0016E346 /* BaseViewModel.swift in Sources */,
 				09F0DD7A2909A3DF0016E346 /* ChildManipulationProtocol.swift in Sources */,
 				09F9EAB229082156001193FC /* ClearButtonCell.swift in Sources */,
 				09F9EAB4290826CB001193FC /* RegistrationControllerViewModel.swift in Sources */,

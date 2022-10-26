@@ -9,7 +9,7 @@ import Foundation
 import RxSwift
 import RxRelay
 
-protocol RegistrationControllerViewModelProtocol {
+protocol RegistrationControllerViewModelProtocol: BaseViewModelProtocol {
     var disposeBag: DisposeBag { get }
     var childManipulationClass: ChildsManipulationProtocol { get }
     

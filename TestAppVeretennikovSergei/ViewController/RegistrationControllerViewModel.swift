@@ -64,10 +64,9 @@ final class ChildsManipulationClass: ChildsManipulationProtocol {
     }
 }
 
-final class RegistrationControllerViewModel: RegistrationControllerViewModelProtocol {
+final class RegistrationControllerViewModel: BaseViewModel, RegistrationControllerViewModelProtocol {
     
     let childManipulationClass: ChildsManipulationProtocol
-    let disposeBag = DisposeBag()
     var userName = BehaviorRelay<String>(value: "")
     var userAge = BehaviorRelay<Int>(value: 0)
     var clearUserData = PublishRelay<Void>()
