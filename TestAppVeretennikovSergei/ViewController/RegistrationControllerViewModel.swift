@@ -9,19 +9,6 @@ import Foundation
 import RxSwift
 import RxRelay
 
-protocol ChildsManipulationProtocol {
-    var isButtonHidden: BehaviorRelay<Bool> { get }
-    var userChilds: [Child] { get }
-    
-    func addChild()
-    func getChildModelAt(indexPath: IndexPath) -> ChildCellViewModelProtocol
-    
-    func setChildCellBindingsWith(cell: ChildTableViewCell, at indexPath: IndexPath)
-    func removeChilds()
-    
-    func deleteChildAt(indexPath: IndexPath)
-}
-
 final class ChildsManipulationClass: ChildsManipulationProtocol {
     
     let isButtonHidden: BehaviorRelay<Bool>
@@ -68,7 +55,6 @@ final class ChildsManipulationClass: ChildsManipulationProtocol {
                 .withUnretained(self)
                 .bind { $0.childAgeChangedAt(indexPath: indexPath, on: $1)}
                 .disposed(by: cell.viewModel?.disposeBag ?? DisposeBag())
-            
     }
     
     func deleteChildAt(indexPath: IndexPath) {
@@ -76,18 +62,6 @@ final class ChildsManipulationClass: ChildsManipulationProtocol {
         userChilds.remove(at: indexPath.row)
         isButtonHidden.accept(false)
     }
-}
-
-protocol RegistrationControllerViewModelProtocol {
-    var disposeBag: DisposeBag { get }
-    var childManipulationClass: ChildsManipulationProtocol { get }
-    
-    var userName: BehaviorRelay<String> { get set }
-    var userAge: BehaviorRelay<Int> { get set }
-    var clearUserData: PublishRelay<Void> { get }
-    
-    func setUserCellBindigsWith(cell: CellForNameSection, at indexPath: IndexPath)
-    func deleteUserChilds()
 }
 
 final class RegistrationControllerViewModel: RegistrationControllerViewModelProtocol {

@@ -13,7 +13,6 @@ final class RegistrationViewController: UIViewController {
     
     private var viewModel: RegistrationControllerViewModelProtocol!
     private let tableView = UITableView()
-    private let disposeBag = DisposeBag()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -84,7 +83,7 @@ final class RegistrationViewController: UIViewController {
         cell.doneButtonTapped.bind { [weak self] _ in
             self?.endEditing()
         }
-        .disposed(by: cell.disposeBag)
+        .disposed(by: cell.viewModel?.disposeBag ?? DisposeBag())
     }
     
     private func deleteData() {
@@ -141,7 +140,7 @@ extension RegistrationViewController: UITableViewDelegate, UITableViewDataSource
             
             cell.crearTapped.bind { [weak self] _ in
                 self?.showAlert()
-            }.disposed(by: disposeBag)
+            }.disposed(by: viewModel.disposeBag)
             
             return cell
         }
