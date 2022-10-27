@@ -42,6 +42,7 @@ final class ChildsManipulationClass: ChildsManipulationProtocol {
     
     func removeChilds() {
         userChilds.removeAll()
+        isButtonHidden.accept(false)
     }
     
     func setChildCellBindingsWith(cell: ChildTableViewCell, at indexPath: IndexPath) {

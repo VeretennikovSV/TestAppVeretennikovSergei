@@ -136,11 +136,12 @@ extension RegistrationViewController: UITableViewDelegate, UITableViewDataSource
             
             return cell
         default: 
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: ClearButtonCell.cellID, for: indexPath) as? ClearButtonCell else { return UITableViewCell() }  
+            let cell = ClearButtonCell()
             
-            cell.crearTapped.bind { [weak self] _ in
-                self?.showAlert()
-            }.disposed(by: viewModel.disposeBag)
+            cell.crearTapped
+                .bind { [weak self] _ in
+                    self?.showAlert()
+                }.disposed(by: viewModel.disposeBag)
             
             return cell
         }

@@ -13,6 +13,7 @@ import RxRelay
 final class ClearButtonCell: UITableViewCell {
     
     private let button = UIButton()
+    private(set) var disposeBag = DisposeBag()
     
     let crearTapped = PublishRelay<Void>()
     
@@ -33,7 +34,6 @@ final class ClearButtonCell: UITableViewCell {
         }
         return nil
     }
-    
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
