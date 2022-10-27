@@ -16,12 +16,22 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         
         let window = UIWindow(windowScene: windowScene)
-        let mainViewController = RegistrationViewController()
+        let configurator: ViewConfiguratorProtocol = ViewConfigurator()
         
-        window.rootViewController = mainViewController
+        
+        window.rootViewController = configurator.configureControllerWith(viewModel: RegistrationControllerViewModel())
         self.window = window
         window.makeKeyAndVisible()
     }
 
 }
 
+protocol ViewConfiguratorProtocol {
+    func configureControllerWith(viewModel: RegistrationControllerViewModelProtocol) -> RegistrationViewController
+}
+
+final class ViewConfigurator: ViewConfiguratorProtocol {
+    func configureControllerWith(viewModel: RegistrationControllerViewModelProtocol) -> RegistrationViewController {
+        RegistrationViewController(viewModel: viewModel)
+    }
+}

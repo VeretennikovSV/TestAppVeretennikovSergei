@@ -19,8 +19,8 @@ final class CustomTextField: UIView {
     private var nextField: CustomTextField?
     private(set) var doneButtonTapped = PublishRelay<Void>()
     
-    let textSender: PublishSubject<String>
-    let clearDataAccepter: PublishRelay<Void>
+    private(set) var textSender: PublishSubject<String>
+    private(set) var clearDataAccepter: PublishRelay<Void>
     
     override init(frame: CGRect) {
         
