@@ -27,6 +27,14 @@ final class ClearButtonCell: UITableViewCell {
         setConstraints()
     }
     
+    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+        if button.frame.contains(point) {
+            return button
+        }
+        return nil
+    }
+    
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -49,6 +57,7 @@ final class ClearButtonCell: UITableViewCell {
     }
     
     @objc private func clearButtonTapped() {
+        print("LALA")
         self.crearTapped.accept(())
     }
 }

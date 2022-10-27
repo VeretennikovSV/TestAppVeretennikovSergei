@@ -107,11 +107,11 @@
 			children = (
 				09F0DD78290971ED0016E346 /* CustomViews */,
 				09F0DD7529093EAB0016E346 /* Protocols */,
-				09F9EAB82908326A001193FC /* Other */,
 				09F9EAB72908325E001193FC /* ViewController */,
 				09F9EAB62908324D001193FC /* UserCell */,
 				09F9EAB529083233001193FC /* ChildCell */,
 				09F9EA982907E7DA001193FC /* Info.plist */,
+				09F9EAB82908326A001193FC /* Other */,
 			);
 			path = TestAppVeretennikovSergei;
 			sourceTree = "<group>";
