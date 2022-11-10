@@ -1,2 +1,5 @@
 # TestAppVeretennikovSergei
-Кандидат &lt;Веретенников Сергей>
+
+# Кандидат <Веретенников Сергей>
+
+Simple test app aka registration screen

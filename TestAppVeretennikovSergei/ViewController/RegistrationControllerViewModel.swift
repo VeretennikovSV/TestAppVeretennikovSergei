@@ -20,12 +20,12 @@ final class ChildsManipulationClass: ChildsManipulationProtocol {
     }
     
     private func childNameChangedAt(indexPath: IndexPath, on newName: String) {
-        guard !userChilds.isEmpty else { return }
+        guard userChilds.count >= indexPath.row && !userChilds.isEmpty else { return }
         userChilds[indexPath.row].name = newName
     }
     
     private func childAgeChangedAt(indexPath: IndexPath, on newAge: Int) {
-        guard !userChilds.isEmpty else { return }
+        guard userChilds.count >= indexPath.row && !userChilds.isEmpty else { return }
         userChilds[indexPath.row].age = newAge
     }
     
@@ -49,17 +49,23 @@ final class ChildsManipulationClass: ChildsManipulationProtocol {
             cell.configureViewModel(viewModel: getChildModelAt(indexPath: indexPath))
             cell.nameSender
                 .withUnretained(self)
-                .bind { $0.childNameChangedAt(indexPath: indexPath, on: $1) }
+                .bind { 
+                    $0.childNameChangedAt(indexPath: indexPath, on: $1) 
+                    
+                }
                 .disposed(by: cell.viewModel?.disposeBag ?? DisposeBag())
             
             cell.ageSender
                 .withUnretained(self)
-                .bind { $0.childAgeChangedAt(indexPath: indexPath, on: $1)}
+                .bind { 
+                    $0.childAgeChangedAt(indexPath: indexPath, on: $1)
+                    
+                }
                 .disposed(by: cell.viewModel?.disposeBag ?? DisposeBag())
     }
     
     func deleteChildAt(indexPath: IndexPath) {
-        guard !userChilds.isEmpty else { return }
+        guard userChilds.count >= indexPath.row && !userChilds.isEmpty else { return }
         userChilds.remove(at: indexPath.row)
         isButtonHidden.accept(false)
     }

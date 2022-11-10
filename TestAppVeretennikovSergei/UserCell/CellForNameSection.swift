@@ -16,7 +16,7 @@ final class CellForNameSection: UITableViewCell, CellProtocol {
     private lazy var nameTextField = CustomTextField(frame: .zero, placeholder: "Имя", nextResponder: ageTextField)
     
     private(set) var disposeBag: DisposeBag
-    private(set) var doneButtonTapped: PublishRelay<Void>
+    private(set) var doneButtonTapped: PublishRelay<Bool>
     private(set) var nameSender: PublishRelay<String>
     private(set) var ageSender: PublishRelay<Int>
     private(set) var clearDataSender: PublishRelay<Void>
@@ -28,7 +28,7 @@ final class CellForNameSection: UITableViewCell, CellProtocol {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         
         self.disposeBag = DisposeBag()
-        self.doneButtonTapped = PublishRelay<Void>()
+        self.doneButtonTapped = PublishRelay<Bool>()
         self.nameSender = PublishRelay<String>()
         self.ageSender = PublishRelay<Int>()
         self.clearDataSender = PublishRelay<Void>()
@@ -86,8 +86,8 @@ final class CellForNameSection: UITableViewCell, CellProtocol {
             }.disposed(by: disposeBag)
         
         ageTextField.doneButtonTapped
-            .bind { [weak self] _ in
-                self?.doneButtonTapped.accept(())
+            .bind { [weak self] isValid in
+                self?.doneButtonTapped.accept(isValid)
             }.disposed(by: disposeBag)
         
         clearDataSender

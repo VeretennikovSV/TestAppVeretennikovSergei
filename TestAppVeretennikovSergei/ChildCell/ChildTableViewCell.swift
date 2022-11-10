@@ -19,7 +19,7 @@ final class ChildTableViewCell: UITableViewCell, CellProtocol {
     private(set) var viewModel: ChildCellViewModelProtocol?
     private(set) var nameSender: PublishRelay<String>
     private(set) var ageSender: PublishRelay<Int>
-    private(set) var doneButtonTapped: PublishRelay<Void>
+    private(set) var doneButtonTapped: PublishRelay<Bool>
     private(set) var disposeBag: DisposeBag
     private(set) var deleteChildButtonSender = PublishRelay<Void>()
     
@@ -36,7 +36,7 @@ final class ChildTableViewCell: UITableViewCell, CellProtocol {
         self.disposeBag = DisposeBag()
         self.nameSender = PublishRelay<String>()
         self.ageSender = PublishRelay<Int>()
-        self.doneButtonTapped = PublishRelay<Void>()
+        self.doneButtonTapped = PublishRelay<Bool>()
         
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         isUserInteractionEnabled = false
@@ -117,15 +117,16 @@ final class ChildTableViewCell: UITableViewCell, CellProtocol {
         ageTextField.setText(String(viewModel.childModel.age))
         
         nameTextField.textSender
+            .share()
             .skip(1)
             .withUnretained(self)
             .bind { 
-                print("Sended")
                 $0.nameSender.accept($1)
             }
             .disposed(by: viewModel.disposeBag)
         
         ageTextField.textSender
+            .share()
             .skip(1)
             .map { Int($0) ?? 0 }
             .withUnretained(self)
@@ -133,8 +134,8 @@ final class ChildTableViewCell: UITableViewCell, CellProtocol {
             .disposed(by: viewModel.disposeBag)
         
         ageTextField.doneButtonTapped
-            .bind { [weak self] _ in
-                self?.doneButtonTapped.accept(())
+            .bind { [weak self] isValid in
+                self?.doneButtonTapped.accept(isValid)
             }.disposed(by: viewModel.disposeBag)
     }
 }

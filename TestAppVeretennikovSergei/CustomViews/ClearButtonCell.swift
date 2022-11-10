@@ -57,7 +57,6 @@ final class ClearButtonCell: UITableViewCell {
     }
     
     @objc private func clearButtonTapped() {
-        print("LALA")
         self.crearTapped.accept(())
     }
 }

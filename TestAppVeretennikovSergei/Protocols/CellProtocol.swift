@@ -13,7 +13,7 @@ protocol CellProtocol {
     
     var nameSender: PublishRelay<String> { get }
     var ageSender: PublishRelay<Int> { get }
-    var doneButtonTapped: PublishRelay<Void> { get }
+    var doneButtonTapped: PublishRelay<Bool> { get }
     var disposeBag: DisposeBag { get }  
     
 }

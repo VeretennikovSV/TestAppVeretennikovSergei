@@ -58,10 +58,11 @@ final class RegistrationViewController: UIViewController {
         tableView.separatorStyle = .none
         
         NSLayoutConstraint.activate([
-            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor)
         ])
+        
         tableViewBottomLayoutConstraint = tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         tableViewBottomLayoutConstraint.isActive = true
     }
@@ -70,8 +71,12 @@ final class RegistrationViewController: UIViewController {
         
         viewModel.setUserCellBindigsWith(cell: cell, at: indexPath)
         
-        cell.doneButtonTapped.bind { [weak self] _ in
-            self?.endEditing()
+        cell.doneButtonTapped.bind { [weak self] isValid in
+            if isValid {
+                self?.endEditing()
+            } else {
+                self?.showAlertInvalidation()
+            }
         }.disposed(by: cell.disposeBag)
     }
     
@@ -87,8 +92,12 @@ final class RegistrationViewController: UIViewController {
             }
             .disposed(by: cell.viewModel?.disposeBag ?? DisposeBag())
         
-        cell.doneButtonTapped.bind { [weak self] _ in
-            self?.endEditing()
+        cell.doneButtonTapped.bind { [weak self] isValid in
+            if isValid {
+                self?.endEditing()
+            } else {
+                self?.showAlertInvalidation()
+            }
         }
         .disposed(by: cell.viewModel?.disposeBag ?? DisposeBag())
     }
@@ -101,6 +110,15 @@ final class RegistrationViewController: UIViewController {
     
     private func endEditing() {
         view.endEditing(true)
+    }
+    
+    private func showAlertInvalidation() {
+        let alertController = UIAlertController(title: "Вы ввели слишком большой возраст", message: "Выберите возрасть лдо 70ти лет", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "Ok", style: .default)
+        
+        alertController.addAction(okAction)
+        
+        present(alertController, animated: true)
     }
     
     @objc func keyboardWillAppear(notification: NSNotification?) {

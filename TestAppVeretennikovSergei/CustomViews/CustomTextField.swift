@@ -17,7 +17,7 @@ final class CustomTextField: UIView {
     private var disposeBag: DisposeBag
     private var isAgeTextField: Bool = false
     private var nextField: CustomTextField?
-    private(set) var doneButtonTapped = PublishRelay<Void>()
+    private(set) var doneButtonTapped = PublishRelay<Bool>()
     
     private(set) var textSender: PublishSubject<String>
     private(set) var clearDataAccepter: PublishRelay<Void>
@@ -111,8 +111,18 @@ final class CustomTextField: UIView {
     }
     
     @objc private func doneTapped() {
-        doneButtonTapped.accept(())
+        
+        if isAgeTextField {
+            if (Int(textField.text ?? "") ?? 0) > 70 {
+                textField.becomeFirstResponder()
+                doneButtonTapped.accept(false)
+                return
+            }
+        }
+        
+        doneButtonTapped.accept(true)
     }
+    
     
     func setText(_ string: String) {
         textField.text = string
